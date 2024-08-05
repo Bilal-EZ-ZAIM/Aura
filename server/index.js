@@ -5,7 +5,8 @@ const dbConection = require("./config/connexionDataBase");
 const user = require("./router/UserRouter");
 const auth = require("./router/AuthRouter");
 const ApiError = require("./util/ApiError");
-// const categoryPath = require("./router/CategoryRouter");
+const upload = require("./router/Upload");
+const categoryPath = require("./router/categoryRouter");
 // const bookPath = require("./router/BookRouter");
 // const SubcategoryPath = require("./router/SubCategoryRouter");
 // const Product = require("./router/ProductRouter");
@@ -37,7 +38,7 @@ app.use(
 
 // app.use("/api/test", TestRouter);
 // app.use("/auth", RestPassword);
-// app.use("/api/category", verifyToken, virefiyAdmin, categoryPath);
+app.use("/api/category", verifyToken, virefiyAdmin, categoryPath);
 // app.use("/api/subcategory", verifyToken, virefiyAdmin, SubcategoryPath);
 // app.use("/api/product", verifyToken, virefiyAdmin, Product);
 // app.use("/api/reservation", verifyToken, Resrvation);
@@ -45,6 +46,8 @@ app.use(
 // app.use("/api/brand", verifyToken, virefiyAdmin, Brand);
 app.use("/api/user", user);
 app.use("/api/auth", auth);
+
+app.use("/", upload);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Request is Not found ${req.originalUrl}`, 400));
